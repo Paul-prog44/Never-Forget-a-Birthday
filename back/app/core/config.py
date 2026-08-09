@@ -8,7 +8,14 @@ class Settings(BaseSettings):
     DB_PASSWORD: str = ""
     DB_HOST: str = "localhost"
     DB_PORT: int = 5432
-    DB_NAME: str = "birthday_db"
+    DB_NAME: str = "database_name"
+
+    # JWT
+    SECRET_KEY: str = ""
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7 # 7 days
+
+
 
     @property
     def DATABASE_URL(self) -> str:
