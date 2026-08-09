@@ -3,7 +3,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Birthday Tracker API"
 
-    #Valeur par défaut pour éviter l'erreur signalé par l'IDE, elles seront écrasées
+    #Valeurs par défaut pour éviter l'erreur signalée par l'IDE, elles seront écrasées
     DB_USER: str = "postgres"
     DB_PASSWORD: str = ""
     DB_HOST: str = "localhost"
