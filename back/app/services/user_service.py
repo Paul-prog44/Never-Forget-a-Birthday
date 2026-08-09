@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from app.models.user import User
 from app.schemas.user import UserCreate
+from app.core.security import get_password_hashpassword
 
 class UserService:
     @staticmethod
@@ -13,8 +14,10 @@ class UserService:
 
     @staticmethod
     def create(db: Session, user_in: UserCreate) -> User:
-        # TODO: HACHAGE DU MDP
-        db_user = User(**user_in.model_dump())
+        user_data= user_in.model_dump()
+        user_data["password"] = get_password_hashpassword(user_data["password"])
+
+        db_user = User(**user_data)
         db.add(db_user)
         db.commit()
         db.refresh(db_user)
