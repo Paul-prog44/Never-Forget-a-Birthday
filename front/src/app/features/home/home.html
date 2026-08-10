@@ -1,0 +1,26 @@
+<div class="hero-container">
+  <div class="hero-card">
+    <h1>🎂 Never Forget a Birthday</h1>
+    <p class="subtitle">
+      Ne manquez plus jamais l'anniversaire de vos proches. Centralisez vos rappels au même endroit.
+    </p>
+
+    <div class="actions">
+      @if (authService.isLoggedIn()) {
+        <p class="welcome-text">
+          Ravi de vous revoir {{ authService.currentUser()?.firstname || '' }} !
+        </p>
+        <a routerLink="/birthdays" class="btn btn-primary">
+          Accéder à mes anniversaires
+        </a>
+      } @else {
+        <a routerLink="/login" class="btn btn-primary">
+          Se connecter
+        </a>
+        <a routerLink="/register" class="btn btn-secondary">
+          Créer un compte
+        </a>
+      }
+    </div>
+  </div>
+</div>
