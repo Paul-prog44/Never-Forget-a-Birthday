@@ -1,6 +1,7 @@
 from datetime import date, datetime
 from typing import Optional
 from pydantic import BaseModel, EmailStr
+from app.schemas.token import Token
 
 class UserCreate(BaseModel):
     email: EmailStr
@@ -25,3 +26,7 @@ class UserResponse(BaseModel):
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
+
+class UserRegisterResponse(BaseModel):
+    user: UserResponse
+    token: Token

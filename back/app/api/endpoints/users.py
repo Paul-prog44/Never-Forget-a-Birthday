@@ -20,4 +20,4 @@ def create_user(user_in: UserCreate, db: Session = Depends(get_db)):
 
 @router.get("/my_profile", response_model=UserResponse)
 def get_my_profile(current_user: User = Depends(get_current_user)):
-    return current_user
+    return 
