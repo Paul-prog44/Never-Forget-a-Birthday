@@ -17,6 +17,7 @@ class UserResponse(BaseModel):
     firstname: str
     lastname: str
     role_id: int
+    date_of_birth: Optional[date] = None
     created_at: datetime
 
     # Permet à Pydantic de lire les modèles SQLAlchemy
