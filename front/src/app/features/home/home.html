@@ -1,26 +1,54 @@
 <div class="hero-container">
-  <div class="hero-card">
-    <h1>🎂 Never Forget a Birthday</h1>
-    <p class="subtitle">
-      Ne manquez plus jamais l'anniversaire de vos proches. Centralisez vos rappels au même endroit.
-    </p>
-
-    <div class="actions">
+   <mat-card-actions align="start" class="card-actions">
       @if (authService.isLoggedIn()) {
-        <p class="welcome-text">
-          Ravi de vous revoir {{ authService.currentUser()?.firstname || '' }} !
-        </p>
-        <a routerLink="/birthdays" class="btn btn-primary">
+        <a mat-flat-button color="primary" routerLink="/birthdays">
+          <mat-icon>dashboard</mat-icon>
           Accéder à mes anniversaires
         </a>
       } @else {
-        <a routerLink="/login" class="btn btn-primary">
-          Se connecter
-        </a>
-        <a routerLink="/register" class="btn btn-secondary">
+        <a mat-flat-button color="primary" routerLink="/register">
+          <mat-icon>person_add</mat-icon>
           Créer un compte
         </a>
       }
-    </div>
-  </div>
+    </mat-card-actions>
+  <mat-card class="hero-card" appearance="outlined">
+    
+    <mat-card-header>
+      <div mat-card-avatar class="hero-avatar">
+        <mat-icon color="primary">cake</mat-icon>
+      </div>
+      <mat-card-title>Never Forget a Birthday</mat-card-title>
+      <mat-card-subtitle>Gestionnaire d'anniversaires intelligent</mat-card-subtitle>
+    </mat-card-header>
+
+    
+    
+
+    <mat-card-content>
+      <p class="description">
+        Vous aimez vos amis, vous voulez qu'ils sachent que vous pensez à eux, seulement voilà, vous n'arrivez pas à vous souvenir de leur date d'anniversaire.
+        Pas de panique, nous sommes là pour vous aider ! Nous allons sauvegarder les dates d'anniversaire des gens qui comptent pour vous pour vous aider à leur souhaiter en vous les rappelant auparavant.
+        Vous pouvez même programmer l'application pour qu'elle envoie un message electronique personnalisé le jour J. 
+      </p>
+
+      <div class="features-grid">
+        <div class="feature-item">
+          <mat-icon>notifications_active</mat-icon>
+          <span>Rappels automatiques</span>
+        </div>
+        <div class="feature-item">
+          <mat-icon>group</mat-icon>
+          <span>Gestion des contacts</span>
+        </div>
+        <div class="feature-item">
+          <mat-icon>lock</mat-icon>
+          <span>Données sécurisées</span>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <!-- Boutons alignés à gauche -->
+   
+  </mat-card>
 </div>

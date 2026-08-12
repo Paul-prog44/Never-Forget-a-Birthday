@@ -1,0 +1,31 @@
+<mat-toolbar class="navbar">
+  <span class="app-title" routerLink="/">🎂 Never Forget</span>
+  
+  <span class="spacer"></span>
+
+  @if (authService.isLoggedIn()) {
+    <!-- Menu utilisateur si connecté -->
+    <button mat-button [matMenuTriggerFor]="userMenu">
+      <mat-icon>account_circle</mat-icon>
+      <span>{{ authService.currentUser()?.firstname || 'Profil' }}</span>
+      <mat-icon>arrow_drop_down</mat-icon>
+    </button>
+
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item routerLink="/profile">
+        <mat-icon>person</mat-icon>
+        <span>Mon Profil</span>
+      </button>
+      <button mat-menu-item (click)="authService.logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Déconnexion</span>
+      </button>
+    </mat-menu>
+  } @else {
+    <!-- Bouton de connexion si visiteur anonyme -->
+    <a mat-button routerLink="/login">
+      <mat-icon>login</mat-icon>
+      Se connecter
+    </a>
+  }
+</mat-toolbar>
