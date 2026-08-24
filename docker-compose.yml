@@ -1,0 +1,38 @@
+version: '3.8'
+
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: app_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./back
+    container_name: app_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@db:${DB_PORT}/${DB_NAME}
+      JWT_SECRET: ${SECRET_KEY}
+    depends_on:
+      - db
+
+  frontend:
+    build: ./front
+    container_name: app_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
