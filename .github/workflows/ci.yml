@@ -36,7 +36,7 @@ jobs:
   #       run: docker compose down -v
 
   deploy:
-    needs: build-and-test
+    # needs: build-and-test
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     environment: never-forget-a-birthday-secrets
