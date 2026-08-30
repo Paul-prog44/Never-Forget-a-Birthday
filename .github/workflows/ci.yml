@@ -1,0 +1,36 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: ["main", "dev"]
+  pull_request:
+    branches: ["main", "dev"]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fetch code
+        uses: actions/checkout@v4
+
+      - name: Validation du build Docker Compose
+        run:
+          # temp .env file for CI pipeline
+          echo "DB_HOST" > .env
+          echo "DB_PORT" >> .env
+          echo "DB_USER" >> .env
+          echo "DB_PASSWORD" >> .env
+          echo "DB_NAME" >> .env
+          echo "SECRET_KEY" >> .env
+
+          docker compose build
+      
+
+      - name: Containers launch test
+        run:
+          docker compose up -d
+          sleep 10
+          docker compose push
+      - name: Containers shutdown
+        run: docker compose down -v
