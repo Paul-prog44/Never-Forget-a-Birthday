@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Validation du build Docker Compose
-        run:
+        run: |
           # temp .env file for CI pipeline
           echo "DB_HOST=db" > .env
           echo "DB_PORT=5432" >> .env
@@ -28,9 +28,9 @@ jobs:
       
 
       - name: Containers launch test
-        run:
+        run: |
           docker compose up -d
           sleep 10
-          docker compose push
+          docker compose ps
       - name: Containers shutdown
         run: docker compose down -v
