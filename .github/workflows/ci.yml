@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI/CD Pipeline
 
 on:
   push:
@@ -19,10 +19,10 @@ jobs:
           # temp .env file for CI pipeline
           echo "DB_HOST=db" > .env
           echo "DB_PORT=5432" >> .env
-          echo "DB_USER=db_user" >> .env
-          echo "DB_PASSWORD=mypassword" >> .env
-          echo "DB_NAME=the_name" >> .env
-          echo "SECRET_KEY=ultrasecurePassword" >> .env
+          echo "DB_USER=${{ secrets.DB_USER }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_USER }}" >> .env
+          echo "DB_NAME=${{ secrets.DB_USER }}" >> .env
+          echo "SECRET_KEY=${{ secrets.DB_USER }}" >> .env
 
           docker compose build
       
@@ -34,3 +34,32 @@ jobs:
           docker compose ps
       - name: Containers shutdown
         run: docker compose down -v
+
+  deploy:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Auto deploy on OVH VPS
+        uses: apploboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /var/www/app
+
+            git pull origin main
+
+            #Build.env
+            echo "DB_HOST=db" > .env
+            echo "DB_PORT=5432" >> .env
+            echo "DB_USER=${{ secrets.DB_USER }}" >> .env
+            echo "DB_NAME= ${{ secrets.DB_PASSWORD }}" >> .env
+            echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
+            echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+
+            docker compose up -d build
+
+            docker image prune -f
