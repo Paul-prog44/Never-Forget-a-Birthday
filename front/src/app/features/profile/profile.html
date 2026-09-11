@@ -1,1 +1,61 @@
-<p>profile works!</p>
+<div class="profile-container">
+  <mat-card class="profile-card" appearance="outlined">
+    <mat-card-header>
+      <div mat-card-avatar class="profile-avatar">
+        <mat-icon>account_circle</mat-icon>
+      </div>
+      <mat-card-title>{{ user()?.firstname }} {{ user()?.lastname }}</mat-card-title>
+      <mat-card-subtitle>Membre depuis le {{ user()?.created_at | date:'dd/MM/yyyy' }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (user(); as u) {
+        <div class="info-group">
+          <!-- Identité -->
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Prénom</mat-label>
+              <input matInput [value]="u.firstname" readonly />
+              <mat-icon matSuffix>person</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Nom</mat-label>
+              <input matInput [value]="u.lastname" readonly />
+              <mat-icon matSuffix>person_outline</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <!-- Contact & Rôle -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Adresse Email</mat-label>
+            <input matInput [value]="u.email" readonly />
+            <mat-icon matSuffix>email</mat-icon>
+          </mat-form-field>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Date de naissance</mat-label>
+              <input 
+                matInput 
+                [value]="u.date_of_birth ? (u.date_of_birth | date:'dd/MM/yyyy') : 'Non renseignée'" 
+                readonly 
+              />
+              <mat-icon matSuffix>cake</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Identifiant Rôle</mat-label>
+              <input matInput [value]="u.role_id" readonly />
+              <mat-icon matSuffix>badge</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+      } @else {
+        <div class="loading-state">
+          <p>Chargement du profil...</p>
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

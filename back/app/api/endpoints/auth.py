@@ -6,19 +6,22 @@ from app.db.session import get_db
 from app.schemas.token import Token
 from app.services.auth_service import AuthService
 from app.core.security import create_access_token
-from app.schemas.user import UserLogin, UserRegisterResponse, UserCreate
+from app.schemas.user import UserLogin, UserRegisterResponse, UserCreate, UserResponse
 from app.services.user_service import UserService
+from app.api.deps import get_current_user 
+
 
 
 router = APIRouter()
 
-@router.post("/login", response_model=Token)
+@router.post("/login", response_model=UserRegisterResponse)
 def login(
     login_data: UserLogin,
     db: Session = Depends(get_db)
-):
+    ):
     
     user = AuthService.authenticate_user(db, email=login_data.email, password=login_data.password)
+
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -27,8 +30,14 @@ def login(
         )
     
     access_token = create_access_token(data={"sub": str(user.id)})
-    return {"access_token": access_token, "token_type": "bearer"}
 
+    return {
+            "user": user,
+            "token": {
+                "access_token": access_token,
+                "token_type": "bearer"
+            }
+        }
 
 @router.post("/register", response_model=UserRegisterResponse, status_code=status.HTTP_201_CREATED)
 def register(user_in: UserCreate, db: Session = Depends(get_db)):
@@ -49,3 +58,7 @@ def register(user_in: UserCreate, db: Session = Depends(get_db)):
               "token_type": "bearer"
          }
     }
+
+@router.get("/profile",response_model=UserResponse, status_code=status.HTTP_200_OK)
+def get_profile(current_user = Depends(get_current_user)):
+        return current_user
