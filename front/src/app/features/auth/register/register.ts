@@ -7,8 +7,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RouterLink, Router } from '@angular/router';
-import { AuthService } from '../../../../core/services/auth.service';
-import { UserCreate } from '../../../../core/models/auth.model';
+import { AuthService } from '../../../core/services/auth.service';
+import { UserCreate } from '../../../core/models/auth.model';
 import { MatDatepickerModule } from '@angular/material/datepicker'; // <-- Requis
 
 @Component({
