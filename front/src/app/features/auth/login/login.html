@@ -6,10 +6,10 @@
     </mat-card-header>
 
     <mat-card-content>
-      @if (errorMessage) {
+      @if (errorMessage()) {
         <div class="error-banner">
           <mat-icon>error</mat-icon>
-          <span>{{ errorMessage }}</span>
+          <span>{{ errorMessage() }}</span>
         </div>
       }
 
