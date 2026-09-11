@@ -17,6 +17,6 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
-export class HomeComponent {
+export class Home {
   authService = inject(AuthService);
 }

@@ -24,10 +24,9 @@ import { AuthService } from '../../core/services/auth.service';
   styleUrl: './profile.css'
 })
 export class Profile {
-  private authService = inject(AuthService);
-  private router = inject(Router);
+  private authService = inject(AuthService)
 
-  user = this.authService.currentUser;
+  user = this.authService.currentUser
 
   ngOnInit(): void {
 
@@ -39,7 +38,6 @@ export class Profile {
   }
 
   onLogout(): void {
-    this.authService.logout();
-    this.router.navigate(['/login']);
+    this.authService.logout()
   }
 }

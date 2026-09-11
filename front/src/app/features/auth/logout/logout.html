@@ -1,0 +1,22 @@
+<div class="logout-container">
+  <mat-card class="logout-card">
+    <mat-card-header class="logout-header">
+      <div class="icon-circle">
+        <mat-icon class="check-icon">check_circle_outline</mat-icon>
+      </div>
+      <mat-card-title>Déconnexion réussie</mat-card-title>
+      <mat-card-subtitle>À bientôt sur votre espace</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-actions class="logout-actions">
+      <button 
+        mat-raised-button 
+        color="primary" 
+        class="full-width-btn"
+        (click)="onLoginAgain()">
+        <mat-icon>login</mat-icon>
+        Se reconnecter
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

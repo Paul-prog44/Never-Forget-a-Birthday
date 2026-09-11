@@ -8,6 +8,7 @@ import {
     UserRegisterResponse,
     UserResponse
 } from '../models/auth.model'
+import { Router } from "@angular/router"
 
 @Injectable({
     providedIn: 'root'
@@ -15,6 +16,8 @@ import {
 export class AuthService {
   private http = inject(HttpClient)
   private apiUrl = `${environment.apiUrl}/auth`
+  private router = inject(Router)
+
 
   currentUser = signal<UserResponse |null>(null)
 
@@ -40,6 +43,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('access_token');
     this.currentUser.set(null);
+    this.router.navigate(['/logout']);
   }
 
   getToken(): string | null {
