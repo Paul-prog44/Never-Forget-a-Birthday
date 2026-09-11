@@ -24,3 +24,16 @@ def create_friend(friend_in: FriendCreate, db: Session = Depends(get_db), curren
         new_friend= FriendService.create(db=db, friend_in=friend_in, user_id = current_user.id)
 
         return new_friend
+
+@router.delete("/{friend_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_friend(friend_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+
+        success = FriendService.delete(db = db, friend_id= friend_id, user_id=current_user.id)
+
+        if not success: 
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND, 
+                    detail="Ami introuvable"
+                )
+
+        return None

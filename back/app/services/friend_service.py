@@ -19,3 +19,15 @@ class FriendService:
         db.refresh(db_friend)
 
         return db_friend
+
+    @staticmethod
+    def delete(db: Session, friend_id: int, user_id: int) -> bool:
+        
+        db_friend = db.query(Friend).filter(Friend.id == friend_id, Friend.user_id == user_id).first()
+
+        if not db_friend:
+            return False
+
+        db.delete(db_friend)
+        db.commit()
+        return True
