@@ -1,0 +1,65 @@
+.friend-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 16px;
+}
+
+.friend-card {
+  max-width: 480px;
+  width: 100%;
+  padding: 24px;
+  border-radius: 12px;
+}
+
+.friend-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.icon-circle {
+  background-color: #e3f2fd;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.header-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  color: #1976d2;
+}
+
+.friend-content {
+  padding: 8px 0;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+mat-icon[matPrefix] {
+  margin-right: 8px;
+  color: #666;
+}
+
+.friend-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 0 0 0;
+}
+
+.action-btn {
+  padding: 0 20px;
+}

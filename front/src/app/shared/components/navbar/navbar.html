@@ -1,6 +1,10 @@
 <mat-toolbar class="navbar">
   <span class="app-title" routerLink="/">🎂 Never Forget A Birthday</span>
-  
+   @if (authService.isLoggedIn()) {
+    <button mat-menu-item routerLink="/add-friend">
+        <span>Friends</span>
+      </button>
+   }
   <span class="spacer"></span>
 
   @if (authService.isLoggedIn()) {

@@ -14,7 +14,7 @@ router = APIRouter()
 @router.post("/", response_model=FriendResponse, status_code=status.HTTP_201_CREATED)
 def create_friend(friend_in: FriendCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
         existing_friend = FriendService.get_by_email(db, email=friend_in.email, user_id=current_user.id)
-
+        print(friend_in)
         if existing_friend:
                 raise HTTPException(
                     status_code=status.HTTP_400_BAD_REQUEST,

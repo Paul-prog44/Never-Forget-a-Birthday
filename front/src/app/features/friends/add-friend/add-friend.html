@@ -1,0 +1,78 @@
+<div class="friend-container">
+  <mat-card class="friend-card">
+    <mat-card-header class="friend-header">
+      <div class="icon-circle">
+        <mat-icon class="header-icon">person_add</mat-icon>
+      </div>
+      <mat-card-title>Ajouter un ami</mat-card-title>
+      <mat-card-subtitle>Renseignez les informations de votre contact</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content class="friend-content">
+      <form [formGroup]="friendForm" (ngSubmit)="onSubmit()" id="addFriendForm">
+        
+        <!-- Prénom -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Prénom</mat-label>
+          <input matInput formControlName="firstname" placeholder="Ex: Jean">
+          <mat-icon matPrefix>person</mat-icon>
+          @if (friendForm.get('firstname')?.hasError('required')) {
+            <mat-error>Le prénom est requis</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nom</mat-label>
+          <input matInput formControlName="lastname" placeholder="Ex: Dupont">
+          <mat-icon matPrefix>person_outline</mat-icon>
+          @if (friendForm.get('lastname')?.hasError('required')) {
+            <mat-error>Le nom est requis</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Adresse email</mat-label>
+          <input matInput formControlName="email" type="email" placeholder="Ex: jean.dupont@example.com">
+          <mat-icon matPrefix>email</mat-icon>
+          @if (friendForm.get('email')?.hasError('required')) {
+            <mat-error>L'email est requis</mat-error>
+          } @else if (friendForm.get('email')?.hasError('email')) {
+            <mat-error>Format d'email invalide</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Date de naissance</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="date_of_birth" placeholder="JJ/MM/AAAA">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          @if (friendForm.get('date_of_birth')?.hasError('required')) {
+            <mat-error>La date de naissance est requise</mat-error>
+          }
+        </mat-form-field>
+
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions class="friend-actions">
+      <button 
+        mat-stroked-button 
+        type="button" 
+        routerLink="/friends" 
+        class="action-btn">
+        Annuler
+      </button>
+      
+      <button 
+        mat-raised-button 
+        color="primary" 
+        type="submit" 
+        form="addFriendForm"
+        [disabled]="friendForm.invalid"
+        class="action-btn">
+        <mat-icon>check</mat-icon>
+        Enregistrer
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
