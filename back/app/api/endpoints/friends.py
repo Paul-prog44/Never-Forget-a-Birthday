@@ -37,3 +37,10 @@ def delete_friend(friend_id: int, db: Session = Depends(get_db), current_user: U
                 )
 
         return None
+
+@router.get("/", status_code=status.HTTP_200_OK)
+def get_friends(db:Session = Depends(get_db), currend_user: User = Depends(get_current_user)):
+        friends = FriendService.get_all(db, currend_user.id)
+        for friend in friends:
+                print(friend.id, friend.firstname, friend.lastname, friend.email)
+        return friends

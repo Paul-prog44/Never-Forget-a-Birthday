@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from app.models.friend import Friend
 from app.schemas.friend import FriendCreate
-
+from typing import List
 
 class FriendService:
 
@@ -31,3 +31,7 @@ class FriendService:
         db.delete(db_friend)
         db.commit()
         return True
+
+    @staticmethod
+    def get_all(db: Session, user_id) -> List[Friend]:
+        return db.query(Friend).filter(Friend.user_id == user_id).all()
