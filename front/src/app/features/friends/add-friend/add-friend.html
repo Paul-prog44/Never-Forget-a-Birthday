@@ -1,78 +1,114 @@
-<div class="friend-container">
-  <mat-card class="friend-card">
-    <mat-card-header class="friend-header">
-      <div class="icon-circle">
-        <mat-icon class="header-icon">person_add</mat-icon>
-      </div>
+<div class="page-container">
+  <!-- Card du haut : Formulaire horizontal d'ajout -->
+  <mat-card class="form-card">
+    <mat-card-header class="card-header">
+      <mat-icon mat-card-avatar color="primary">person_add</mat-icon>
       <mat-card-title>Ajouter un ami</mat-card-title>
       <mat-card-subtitle>Renseignez les informations de votre contact</mat-card-subtitle>
     </mat-card-header>
 
-    <mat-card-content class="friend-content">
-      <form [formGroup]="friendForm" (ngSubmit)="onSubmit()" id="addFriendForm">
+    <mat-card-content class="card-content">
+      <form [formGroup]="friendForm" (ngSubmit)="onSubmit()" id="addFriendForm" class="horizontal-form">
         
         <!-- Prénom -->
-        <mat-form-field appearance="outline" class="full-width">
+        <mat-form-field appearance="outline" class="form-field">
           <mat-label>Prénom</mat-label>
           <input matInput formControlName="firstname" placeholder="Ex: Jean">
           <mat-icon matPrefix>person</mat-icon>
           @if (friendForm.get('firstname')?.hasError('required')) {
-            <mat-error>Le prénom est requis</mat-error>
+            <mat-error>Requis</mat-error>
           }
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
+        <!-- Nom -->
+        <mat-form-field appearance="outline" class="form-field">
           <mat-label>Nom</mat-label>
           <input matInput formControlName="lastname" placeholder="Ex: Dupont">
           <mat-icon matPrefix>person_outline</mat-icon>
           @if (friendForm.get('lastname')?.hasError('required')) {
-            <mat-error>Le nom est requis</mat-error>
+            <mat-error>Requis</mat-error>
           }
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
+        <!-- Email -->
+        <mat-form-field appearance="outline" class="form-field">
           <mat-label>Adresse email</mat-label>
           <input matInput formControlName="email" type="email" placeholder="Ex: jean.dupont@example.com">
           <mat-icon matPrefix>email</mat-icon>
           @if (friendForm.get('email')?.hasError('required')) {
-            <mat-error>L'email est requis</mat-error>
+            <mat-error>Requis</mat-error>
           } @else if (friendForm.get('email')?.hasError('email')) {
-            <mat-error>Format d'email invalide</mat-error>
+            <mat-error>Invalide</mat-error>
           }
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
+        <!-- Date de naissance -->
+        <mat-form-field appearance="outline" class="form-field">
           <mat-label>Date de naissance</mat-label>
           <input matInput [matDatepicker]="picker" formControlName="date_of_birth" placeholder="JJ/MM/AAAA">
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
           @if (friendForm.get('date_of_birth')?.hasError('required')) {
-            <mat-error>La date de naissance est requise</mat-error>
+            <mat-error>Requis</mat-error>
           }
         </mat-form-field>
 
+        <!-- Bouton Enregistrer -->
+        <div class="submit-btn-container">
+          <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit" 
+            [disabled]="friendForm.invalid"
+            class="submit-btn">
+            <mat-icon>add</mat-icon>
+            Ajouter
+          </button>
+        </div>
+
       </form>
     </mat-card-content>
+  </mat-card>
 
-    <mat-card-actions class="friend-actions">
-      <button 
-        mat-stroked-button 
-        type="button" 
-        routerLink="/friends" 
-        class="action-btn">
-        Annuler
-      </button>
-      
-      <button 
-        mat-raised-button 
-        color="primary" 
-        type="submit" 
-        form="addFriendForm"
-        [disabled]="friendForm.invalid"
-        class="action-btn">
-        <mat-icon>check</mat-icon>
-        Enregistrer
-      </button>
-    </mat-card-actions>
+  <!-- Card du bas : Liste des amis -->
+  <mat-card class="list-card">
+    <mat-card-header class="card-header">
+      <mat-icon mat-card-avatar color="accent">group</mat-icon>
+      <mat-card-title>Mes amis</mat-card-title>
+      <mat-card-subtitle>Liste de vos contacts enregistrés</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content class="card-content">
+      @if (friends().length === 0) {
+        <div class="empty-state">
+          <mat-icon>group_off</mat-icon>
+          <p>Aucun ami enregistré pour le moment.</p>
+        </div>
+      } @else {
+        <mat-list>
+          @for (friend of friends(); track friend.id) {
+            <mat-list-item class="friend-item">
+              <mat-icon matListItemIcon class="friend-avatar">account_circle</mat-icon>
+              <div matListItemTitle class="friend-name">
+                {{ friend.firstname }} {{ friend.lastname }}
+              </div>
+              <div matListItemLine class="friend-details">
+                <span><mat-icon class="inline-icon">email</mat-icon> {{ friend.email }}</span>
+                <span><mat-icon class="inline-icon">cake</mat-icon> {{ friend.date_of_birth | date:'dd/MM/yyyy' }}</span>
+              </div>
+              <button 
+                mat-icon-button 
+                color="warn" 
+                matListItemMeta 
+                (click)="onDelete(friend.id)"
+                title="Supprimer l'ami">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+          }
+        </mat-list>
+      }
+    </mat-card-content>
   </mat-card>
 </div>

@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button'
 import { Router, RouterLink } from '@angular/router'
 import { FriendService } from '../../../core/services/friend.service';
 import { FriendCreate } from '../../../core/models/friend.model';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
   selector: 'app-add-friend',
@@ -25,15 +26,18 @@ import { FriendCreate } from '../../../core/models/friend.model';
     MatNativeDateModule,
     MatIconModule,
     MatButtonModule,
-    RouterLink
+    RouterLink,
+    MatListModule
   ],
   templateUrl: './add-friend.html',
   styleUrl: './add-friend.css'
 })
 export class AddFriend {
-  private fb = inject(FormBuilder);
-  private friendService = inject(FriendService);
-  private router = inject(Router);
+  private fb = inject(FormBuilder)
+  private friendService = inject(FriendService)
+  private router = inject(Router)
+
+  friends = this.friendService.friends;
 
   friendForm = this.fb.group({
     firstname: ['', [Validators.required]],
@@ -42,26 +46,37 @@ export class AddFriend {
     date_of_birth: ['', [Validators.required]]
   })
 
+  ngOnInit(): void {
+    // Charge la liste des amis au chargement de la page
+    this.friendService.getFriends().subscribe();
+  }
+
   onSubmit(): void {
     if (this.friendForm.valid) {
 
       const formData = this.friendForm.getRawValue() as FriendCreate
       const dateObj = new Date(formData.date_of_birth)
-      const formattedDate = dateObj.toISOString().split('T')[0];
+      const formattedDate = dateObj.toISOString().split('T')[0]
 
       const payload: FriendCreate = {
       ...formData,
-      date_of_birth: formattedDate
-    };
+      date_of_birth: formattedDate,
+    }
 
-      this.friendService.createFriend(formData).subscribe({
+      this.friendService.createFriend(payload).subscribe({
         next: () => {
           this.router.navigate(['/friends'])
         },
         error: (err) => {
           console.error('Erreur lors de la création :', err)
         }
-      });
+      })
     }
+  }
+
+  onDelete(id: number): void {
+    this.friendService.deleteFriend(id).subscribe({
+      error: (err) => console.error('Erreur lors de la suppression :', err)
+    });
   }
 }

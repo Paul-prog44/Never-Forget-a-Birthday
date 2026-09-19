@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 from datetime import date, datetime
 from typing import Optional
 
@@ -9,7 +9,7 @@ class FriendCreate(BaseModel):
     lastname: str
     email: EmailStr
     date_of_birth: date
-    # created_at: datetime
+    created_at: Optional[datetime] = Field(default_factory=datetime.now)
     notification_active: Optional[bool] = False
     auto_send_email: Optional[bool] = False
 

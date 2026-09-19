@@ -3,6 +3,7 @@ export interface FriendCreate {
     lastname: string
     email: string
     date_of_birth: string
+    
 }
 
 export interface FriendResponse {

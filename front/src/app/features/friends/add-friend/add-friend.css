@@ -1,65 +1,88 @@
-.friend-container {
+.page-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 80vh;
-  padding: 16px;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 16px;
 }
 
-.friend-card {
-  max-width: 480px;
-  width: 100%;
-  padding: 24px;
+.form-card, .list-card {
+  padding: 16px;
   border-radius: 12px;
 }
 
-.friend-header {
+.card-header {
+  margin-bottom: 16px;
+}
+
+/* Formulaire horizontal */
+.horizontal-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.form-field {
+  flex: 1 1 200px;
+  min-width: 200px;
+}
+
+.submit-btn-container {
+  display: flex;
+  align-items: center;
+  height: 56px; /* Alignement vertical avec les mat-form-field appearance="outline" */
+}
+
+.submit-btn {
+  height: 48px;
+  padding: 0 24px;
+}
+
+/* Liste des amis */
+.empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  margin-bottom: 24px;
-}
-
-.icon-circle {
-  background-color: #e3f2fd;
-  border-radius: 50%;
-  width: 64px;
-  height: 64px;
-  display: flex;
   justify-content: center;
-  align-items: center;
-  margin-bottom: 12px;
+  padding: 40px 0;
+  color: #757575;
 }
 
-.header-icon {
-  font-size: 32px;
-  width: 32px;
-  height: 32px;
-  color: #1976d2;
-}
-
-.friend-content {
-  padding: 8px 0;
-}
-
-.full-width {
-  width: 100%;
+.empty-state mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
   margin-bottom: 8px;
 }
 
-mat-icon[matPrefix] {
-  margin-right: 8px;
-  color: #666;
+.friend-item {
+  padding: 8px 0;
 }
 
-.friend-actions {
+.friend-avatar {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: #1976d2;
+}
+
+.friend-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.friend-details {
   display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  padding: 16px 0 0 0;
+  gap: 16px;
+  color: #666;
+  font-size: 0.9rem;
 }
 
-.action-btn {
-  padding: 0 20px;
+.inline-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
 }
