@@ -14,7 +14,7 @@ import { FriendCreate } from '../../../core/models/friend.model';
 import { MatListModule } from '@angular/material/list';
 
 @Component({
-  selector: 'app-add-friend',
+  selector: 'app-friend-dashboard',
   standalone: true,
   imports: [
     CommonModule,
@@ -29,10 +29,10 @@ import { MatListModule } from '@angular/material/list';
     RouterLink,
     MatListModule
   ],
-  templateUrl: './add-friend.html',
-  styleUrl: './add-friend.css'
+  templateUrl: './friend-dashboard.html',
+  styleUrl: './friend-dashboard.css'
 })
-export class AddFriend {
+export class FriendDashboard {
   private fb = inject(FormBuilder)
   private friendService = inject(FriendService)
   private router = inject(Router)
