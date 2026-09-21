@@ -12,6 +12,8 @@ import { Router, RouterLink } from '@angular/router'
 import { FriendService } from '../../../core/services/friend.service';
 import { FriendCreate } from '../../../core/models/friend.model';
 import { MatListModule } from '@angular/material/list';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { EditFriendDialog } from '../../friends/edit-friend-dialog/edit-friend-dialog'; // Import de la modale créée
 
 @Component({
   selector: 'app-friend-dashboard',
@@ -27,7 +29,8 @@ import { MatListModule } from '@angular/material/list';
     MatIconModule,
     MatButtonModule,
     RouterLink,
-    MatListModule
+    MatListModule,
+    MatDialogModule
   ],
   templateUrl: './friend-dashboard.html',
   styleUrl: './friend-dashboard.css'
@@ -36,6 +39,7 @@ export class FriendDashboard {
   private fb = inject(FormBuilder)
   private friendService = inject(FriendService)
   private router = inject(Router)
+  private dialog = inject(MatDialog)
 
   friends = this.friendService.friends;
 
@@ -77,6 +81,27 @@ export class FriendDashboard {
   onDelete(id: number): void {
     this.friendService.deleteFriend(id).subscribe({
       error: (err) => console.error('Erreur lors de la suppression :', err)
+    });
+  }
+
+  onEdit(id: number): void {
+    // Récupération de l'ami à modifier depuis le Signal
+    const friendToEdit = this.friends().find(f => f.id === id);
+    if (!friendToEdit) return;
+
+    // Ouverture de la boîte de dialogue
+    const dialogRef = this.dialog.open(EditFriendDialog, {
+      width: '400px',
+      data: friendToEdit
+    });
+
+    // Traitement du résultat à la fermeture
+    dialogRef.afterClosed().subscribe((updatedData: FriendCreate | undefined) => {
+      if (updatedData) {
+        this.friendService.updateFriend(id, updatedData).subscribe({
+          error: (err) => console.error('Erreur lors de la modification :', err)
+        });
+      }
     });
   }
 }

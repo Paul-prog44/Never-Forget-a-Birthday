@@ -11,33 +11,40 @@ export class FriendService {
   private http = inject(HttpClient);
   private apiUrl = `${environment.apiUrl}/friends` 
 
-  // Signal pour maintenir la liste des amis synchronisée
+  //Memoire locale de la liste d'ami
   friends = signal<FriendResponse[]>([]);
 
-  // Récupérer tous les amis
   getFriends(): Observable<FriendResponse[]> {
     return this.http.get<FriendResponse[]>(this.apiUrl).pipe(
       tap(friendsList => this.friends.set(friendsList))
     );
   }
 
-  // Créer un ami
   createFriend(friendData: FriendCreate): Observable<FriendResponse> {
     return this.http.post<FriendResponse>(this.apiUrl, friendData).pipe(
       tap(newFriend => {
-        // Met à jour le signal en ajoutant le nouvel ami à la liste existante
         this.friends.update(current => [...current, newFriend]);
       })
     );
   }
 
-  // Supprimer un ami
   deleteFriend(friendId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${friendId}`).pipe(
       tap(() => {
-        // Retire l'ami supprimé du signal
         this.friends.update(current => current.filter(f => f.id !== friendId));
       })
     );
   }
+
+  updateFriend(friendId: number, updatedData: FriendCreate): Observable<FriendResponse> {
+  return this.http.patch<FriendResponse>(`${this.apiUrl}/${friendId}`, updatedData).pipe(
+    tap((updatedFriend) => {
+      this.friends.update(currentFriends =>
+        currentFriends.map(friend =>
+          friend.id === friendId ? updatedFriend : friend
+        )
+      );
+    })
+  );
+}
 }
