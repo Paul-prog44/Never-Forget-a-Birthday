@@ -14,7 +14,6 @@ router = APIRouter()
 @router.post("/", response_model=FriendResponse, status_code=status.HTTP_201_CREATED)
 def create_friend(friend_in: FriendCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
         existing_friend = FriendService.get_by_email(db, email=friend_in.email, user_id=current_user.id)
-        print(friend_in)
         if existing_friend:
                 raise HTTPException(
                     status_code=status.HTTP_400_BAD_REQUEST,
@@ -39,8 +38,25 @@ def delete_friend(friend_id: int, db: Session = Depends(get_db), current_user: U
         return None
 
 @router.get("/", status_code=status.HTTP_200_OK)
-def get_friends(db:Session = Depends(get_db), currend_user: User = Depends(get_current_user)):
-        friends = FriendService.get_all(db, currend_user.id)
+def get_friends(db:Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+        friends = FriendService.get_all(db, current_user.id)
         for friend in friends:
                 print(friend.id, friend.firstname, friend.lastname, friend.email)
         return friends
+
+@router.patch("/{friend_id}", status_code=status.HTTP_200_OK)
+def patch_friend(friend_data: FriendCreate,
+                 friend_id: int, 
+                 db:Session = Depends(get_db), 
+                 current_user: User = Depends(get_current_user)
+                 ):
+        updated_friend = FriendService.patch(db=db, friend_id=friend_id, user_id=current_user.id,friend_data = friend_data)
+
+
+        if not updated_friend: 
+                        raise HTTPException(
+                            status_code=status.HTTP_404_NOT_FOUND, 
+                            detail="Ami introuvable"
+                        )                 
+
+        return updated_friend

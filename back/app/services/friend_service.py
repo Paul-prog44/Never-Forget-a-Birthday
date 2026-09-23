@@ -35,3 +35,21 @@ class FriendService:
     @staticmethod
     def get_all(db: Session, user_id) -> List[Friend]:
         return db.query(Friend).filter(Friend.user_id == user_id).all()
+
+    @staticmethod
+    def patch(db: Session, friend_id: int, user_id, friend_data: FriendCreate) -> Friend | None:
+
+        db_friend = db.query(Friend).filter(Friend.id == friend_id, Friend.user_id == user_id).first()
+
+        if not db_friend:
+            return None
+
+        updated_data = friend_data.model_dump(exclude_unset=True)
+
+        for key, value in updated_data.items():
+            setattr(db_friend, key, value)
+
+        db.commit()
+        db.refresh(db_friend)
+
+        return db.query(Friend).filter(Friend.id == friend_id).first()
