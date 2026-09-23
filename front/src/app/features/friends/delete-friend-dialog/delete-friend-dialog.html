@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Supprimer cet ami?</h2>
+
+    <mat-dialog-content>
+    Attention, toute suppression est définitive.
+    </mat-dialog-content>
+
+        <mat-dialog-actions align="end">
+        <button mat-stroked-button (click)="onCancel()">Annuler</button>
+        <button 
+            mat-raised-button 
+            color="primary" 
+            (click)="onConfirm()">
+            Supprimer
+        </button>
+        </mat-dialog-actions>

@@ -8,12 +8,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatNativeDateModule } from '@angular/material/core'
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button'
-import { Router, RouterLink } from '@angular/router'
+import { Router } from '@angular/router'
 import { FriendService } from '../../../core/services/friend.service';
 import { FriendCreate } from '../../../core/models/friend.model';
 import { MatListModule } from '@angular/material/list';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EditFriendDialog } from '../../friends/edit-friend-dialog/edit-friend-dialog'; // Import de la modale créée
+import { DeleteFriendDialog } from '../delete-friend-dialog/delete-friend-dialog';
 
 @Component({
   selector: 'app-friend-dashboard',
@@ -28,7 +29,6 @@ import { EditFriendDialog } from '../../friends/edit-friend-dialog/edit-friend-d
     MatNativeDateModule,
     MatIconModule,
     MatButtonModule,
-    RouterLink,
     MatListModule,
     MatDialogModule
   ],
@@ -79,10 +79,22 @@ export class FriendDashboard {
   }
 
   onDelete(id: number): void {
-    this.friendService.deleteFriend(id).subscribe({
-      error: (err) => console.error('Erreur lors de la suppression :', err)
+    const friendToDelete = this.friends().find(f => f.id === id);
+    if (!friendToDelete) return;
+
+    const dialogRef = this.dialog.open(DeleteFriendDialog, {
+      width: '400px'
     });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.friendService.deleteFriend(id).subscribe({
+          error: (err) => console.error('Erreur lors de la suppression :', err)
+        })
+      }
+    })
   }
+
 
   onEdit(id: number): void {
     // Récupération de l'ami à modifier depuis le Signal
