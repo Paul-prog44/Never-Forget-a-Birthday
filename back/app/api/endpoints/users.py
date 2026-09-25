@@ -19,9 +19,9 @@ def create_user(user_in: UserCreate, db: Session = Depends(get_db)):
         )
     return AuthService.create(db=db, user_in=user_in)
 
-@router.get("/my_profile", response_model=UserResponse)
-def get_my_profile(current_user: User = Depends(get_current_user)):
-    return current_user
+@router.get("/profile",response_model=UserResponse, status_code=status.HTTP_200_OK)
+def get_profile(current_user:User = Depends(get_current_user)):
+        return current_user
 
 @router.patch("/update", response_model=UserResponse, status_code=status.HTTP_200_OK)
 def update(new_data: UserUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):

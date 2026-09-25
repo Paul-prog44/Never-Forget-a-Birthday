@@ -61,7 +61,3 @@ def register(user_in: UserCreate, db: Session = Depends(get_db)):
          }
     }
       
-
-@router.get("/profile",response_model=UserResponse, status_code=status.HTTP_200_OK)
-def get_profile(current_user = Depends(get_current_user)):
-        return current_user

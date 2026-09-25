@@ -58,9 +58,5 @@ export class AuthService {
     localStorage.setItem('access_token', token);
   }
 
-  getUserProfile(): Observable<UserResponse> {
-    return this.http.get<UserResponse>(`${this.apiUrl}/profile`).pipe(
-      tap(user => this.currentUser.set(user))
-    )
-  }
+  
 }

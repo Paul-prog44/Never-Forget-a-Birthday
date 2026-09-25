@@ -19,7 +19,13 @@ export class UserService {
   
   currentUser = this.authService.currentUser
 
-  
+  getUserProfile(): Observable<UserResponse> {
+    return this.http.get<UserResponse>(`${this.apiUrl}/profile`).pipe(
+      tap(user => this.currentUser.set(user))
+    )
+  }
+
+
   updateProfile(userUpdate: UserUpdate): Observable<UserResponse> {
     return this.http.patch<UserResponse>(`${this.apiUrl}/update`, userUpdate).pipe(
       tap(user => { this.currentUser.set(user)})

@@ -38,7 +38,7 @@ export class Profile {
   ngOnInit(): void {
 
     if (!this.user() && this.authService.isLoggedIn()) {
-      this.authService.getUserProfile().subscribe({
+      this.userService.getUserProfile().subscribe({
         error: () => this.onLogout()
       })
     }
