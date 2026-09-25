@@ -50,6 +50,23 @@
               <mat-icon matSuffix>badge</mat-icon>
             </mat-form-field>
           </div>
+          <div class="form-row">
+            <button
+                mat-raised-button 
+                matListItemMeta 
+                (click)="onEdit()"
+                title="Edit">
+                Modifier
+              </button>
+
+              <button
+                mat-raised-button 
+                matListItemMeta 
+                (click)="onDelete()"
+                title="Delete">
+                Supprimer mon compte
+              </button>
+          </div>
         </div>
       } @else {
         <div class="loading-state">

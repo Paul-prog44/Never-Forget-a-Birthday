@@ -5,8 +5,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { EditProfileDialog } from './edit-profile-dialog/edit-profile-dialog';
+import { UserUpdate } from '../../core/models/auth.model';
 
 @Component({
   selector: 'app-profile',
@@ -18,13 +20,16 @@ import { AuthService } from '../../core/services/auth.service';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
   ],
   templateUrl: './profile.html',
   styleUrl: './profile.css'
 })
 export class Profile {
   private authService = inject(AuthService)
+  private dialog = inject(MatDialog)
+
 
   user = this.authService.currentUser
 
@@ -40,4 +45,26 @@ export class Profile {
   onLogout(): void {
     this.authService.logout()
   }
+
+  onEdit(): void {
+
+    const dialogRef = this.dialog.open(EditProfileDialog, {
+          width: '400px',
+          data: this.user()
+        });
+
+    //TODO : Save changes
+    dialogRef.afterClosed().subscribe((updatedProfile : UserUpdate | undefined) => {
+      if (updatedProfile) {
+        this.authService.updateProfile()
+      }
+    }
+  
+    )
+  }
+
+  onDelete(): void{
+    return
+  }
+  
 }

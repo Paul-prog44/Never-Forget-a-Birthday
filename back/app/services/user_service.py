@@ -1,7 +1,8 @@
 from sqlalchemy.orm import Session
 from app.models.user import User
-from app.schemas.user import UserCreate
+from app.schemas.user import UserUpdate
 from app.core.security import get_password_hashpassword
+
 
 class UserService:
     @staticmethod
@@ -13,12 +14,13 @@ class UserService:
         return db.query(User).filter(User.id == user_id).first()
 
     @staticmethod
-    def create(db: Session, user_in: UserCreate) -> User:
-        user_data= user_in.model_dump()
-        user_data["password"] = get_password_hashpassword(user_data["password"])
+    def update(db: Session, db_user: User, user_data: UserUpdate) -> User:
+        update_data = user_data.model_dump(exclude_unset=True)
 
-        db_user = User(**user_data)
-        db.add(db_user)
+        for field, value in update_data.items():
+            setattr(db_user, field, value)
+
         db.commit()
         db.refresh(db_user)
+
         return db_user

@@ -15,7 +15,7 @@ export interface UserResponse {
     firstname: string
     lastname: string
     role_id: number
-    date_of_birth?: string | null
+    date_of_birth: string
     created_at: string
 }
 
@@ -27,4 +27,11 @@ export interface UserLogin {
 export interface UserRegisterResponse {
     user: UserResponse
     token: Token
+}
+
+export interface UserUpdate {
+    email: string
+    firstname: string
+    lastname: string
+    date_of_birth: string |null
 }

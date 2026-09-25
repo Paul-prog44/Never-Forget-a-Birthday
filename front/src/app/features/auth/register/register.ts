@@ -43,7 +43,7 @@ export class Register {
     lastname: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
-    date_of_birth: [null as Date | null],
+    date_of_birth: [null as Date | null, Validators.required],
     role_id: [1]
   })
 

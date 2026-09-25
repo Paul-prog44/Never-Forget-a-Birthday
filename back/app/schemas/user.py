@@ -31,3 +31,9 @@ class UserLogin(BaseModel):
 class UserRegisterResponse(BaseModel):
     user: UserResponse
     token: Token
+
+class UserUpdate(BaseModel):
+    firstname: str
+    lastname: str
+    date_of_birth: date
+    email: EmailStr
