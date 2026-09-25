@@ -9,6 +9,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EditProfileDialog } from './edit-profile-dialog/edit-profile-dialog';
 import { UserUpdate } from '../../core/models/auth.model';
+import { UserService } from '../../core/services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -29,6 +30,7 @@ import { UserUpdate } from '../../core/models/auth.model';
 export class Profile {
   private authService = inject(AuthService)
   private dialog = inject(MatDialog)
+  private userService = inject(UserService)
 
 
   user = this.authService.currentUser
@@ -56,7 +58,9 @@ export class Profile {
     //TODO : Save changes
     dialogRef.afterClosed().subscribe((updatedProfile : UserUpdate | undefined) => {
       if (updatedProfile) {
-        this.authService.updateProfile()
+        this.userService.updateProfile(updatedProfile).subscribe({
+          error: (err) => console.log('Erreur lors de la mise à jour du profile', err)
+        })
       }
     }
   

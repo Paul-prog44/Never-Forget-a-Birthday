@@ -24,3 +24,7 @@ class UserService:
         db.refresh(db_user)
 
         return db_user
+
+    @staticmethod
+    def check_new_email(db: Session, email: str, id: int) -> User | None:
+        return db.query(User).filter(User.email == email, User.id != id).first()

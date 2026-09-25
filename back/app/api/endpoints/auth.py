@@ -6,7 +6,7 @@ from app.db.session import get_db
 from app.schemas.token import Token
 from app.services.auth_service import AuthService
 from app.core.security import create_access_token
-from app.schemas.user import UserLogin, UserRegisterResponse, UserCreate, UserResponse, UserUpdate
+from app.schemas.user import UserLogin, UserRegisterResponse, UserCreate, UserResponse
 from app.services.user_service import UserService
 from app.api.deps import get_current_user 
 from app.models.user import User
@@ -60,13 +60,6 @@ def register(user_in: UserCreate, db: Session = Depends(get_db)):
               "token_type": "bearer"
          }
     }
-
-@router.patch("/update", response_model=UserResponse, status_code=status.HTTP_200_OK)
-def update(new_data: UserUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-
-    update_user = UserService.update(db, current_user, new_data)
-
-    return update_user
       
 
 @router.get("/profile",response_model=UserResponse, status_code=status.HTTP_200_OK)

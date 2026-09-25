@@ -7,7 +7,6 @@ import {
     UserLogin,
     UserRegisterResponse,
     UserResponse,
-    UserUpdate
 } from '../models/auth.model'
 import { Router } from "@angular/router"
 
@@ -38,12 +37,6 @@ export class AuthService {
           this.currentUser.set(response.user)
           }) 
       )
-  }
-
-  updateProfile(userUpdate: UserUpdate): Observable<UserResponse> {
-    return this.http.patch<UserResponse>(`${this.apiUrl}/update}`, userUpdate).pipe(
-      tap(user => {this.currentUser.set(user)})
-    )
   }
 
 
