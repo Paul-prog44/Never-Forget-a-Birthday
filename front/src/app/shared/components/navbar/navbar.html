@@ -2,8 +2,11 @@
   <span class="app-title" routerLink="/">🎂 Never Forget A Birthday</span>
    @if (authService.isLoggedIn()) {
     <button mat-menu-item routerLink="/friend-dashboard">
-        <span>Friends</span>
-      </button>
+      <span>Friends</span>
+    </button>
+    <button mat-menu-item routerLink="/calendar">
+      <span>Calendrier</span>
+    </button>
    }
   <span class="spacer"></span>
 

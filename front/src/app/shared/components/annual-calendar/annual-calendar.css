@@ -1,0 +1,37 @@
+.calendar-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+/* Grille réactive 12 mois (4 colonnes sur grand écran, 2 sur tablette, 1 sur mobile) */
+.year-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 16px;
+}
+
+.month-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Style de la pastille/badge d'anniversaire sur le calendrier */
+::ng-deep .birthday-date {
+  background-color: #e91e63 !important; /* Couleur rose/rouge Material */
+  color: white !important;
+  border-radius: 50% !important;
+  font-weight: bold;
+}
+
+::ng-deep .birthday-date .mat-calendar-body-cell-content {
+  color: white !important;
+}
+
+/* AJOUT ICI : Masque l'en-tête natif de navigation de chaque mois */
+::ng-deep .mat-calendar-header {
+  display: none !important;
+}

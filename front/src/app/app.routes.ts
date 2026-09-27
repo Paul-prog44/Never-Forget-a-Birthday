@@ -5,6 +5,7 @@ import { Login } from './features/auth/login/login';
 import { Profile } from './features/profile/profile';
 import { Logout } from './features/auth/logout/logout';
 import { FriendDashboard } from './features/friends/friend-dashboard/friend-dashboard';
+import { Calendar } from './features/calendar/calendar';
 
 export const routes: Routes = [
     {path:'', component: Home},
@@ -12,5 +13,6 @@ export const routes: Routes = [
     {path: 'login', component: Login},
     {path: 'profile', component: Profile},
     {path:'logout', component: Logout},
-    {path:'friend-dashboard', component: FriendDashboard}
+    {path:'friend-dashboard', component: FriendDashboard},
+    {path:'calendar', component: Calendar}
 ];

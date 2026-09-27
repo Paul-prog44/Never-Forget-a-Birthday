@@ -1,0 +1,15 @@
+<p>annual-calendar works!</p>
+<div class="calendar-header">
+  <h2>Calendrier des Anniversaires - {{ currentYear() }}</h2>
+</div>
+
+<div class="year-grid">
+  @for (monthDate of months(); track $index) {
+    <div class="month-card">
+      <mat-calendar 
+        [startAt]="monthDate" 
+        [dateClass]="dateClass">
+      </mat-calendar>
+    </div>
+  }
+</div>
