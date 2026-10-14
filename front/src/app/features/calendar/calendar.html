@@ -1,1 +1,9 @@
 <app-annual-calendar [birthdaysList]="friendsList()"></app-annual-calendar>
+<div>
+<h2>Liste des anniversaires</h2>
+<ol>
+    @for (friend of sortedFriendsList(); track friend.id) {
+        <li>{{ friend.date_of_birth | date:'dd/MM'}} . {{friend.firstname}}</li>
+    }
+</ol>
+</div>  
