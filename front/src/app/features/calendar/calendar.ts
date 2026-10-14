@@ -12,6 +12,9 @@ import { AnnualCalendar } from '../../shared/components/annual-calendar/annual-c
 export class Calendar {
   private friendService = inject(FriendService)
 
+  ngOnInit(): void {
+      this.friendService.getFriends().subscribe();
+    }
   friendsList = this.friendService.friends
 
  
