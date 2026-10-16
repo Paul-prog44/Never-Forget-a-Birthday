@@ -1,12 +1,14 @@
 <mat-toolbar class="navbar">
   <span class="app-title" routerLink="/">🎂 Never Forget A Birthday</span>
    @if (authService.isLoggedIn()) {
-    <button mat-menu-item routerLink="/friend-dashboard">
-      <span>Friends</span>
-    </button>
-    <button mat-menu-item routerLink="/calendar">
-      <span>Calendrier</span>
-    </button>
+    <div class="navMenu">
+      <button mat-menu-item routerLink="/friend-dashboard">
+        <span>Friends</span>
+      </button>
+      <button mat-menu-item routerLink="/calendar">
+        <span>Calendrier</span>
+      </button>
+    </div>
    }
   <span class="spacer"></span>
 
