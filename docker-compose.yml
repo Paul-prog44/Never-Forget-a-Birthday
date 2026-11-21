@@ -42,7 +42,7 @@ services:
     build:
       context: ./front
       args:
-        API_URL: http://${API_HOST:-127.0.0.1}:8000
+        API_URL: http://${API_HOST:-127.0.0.1}/api:8000
     container_name: app_frontend
     restart: always
     ports:
