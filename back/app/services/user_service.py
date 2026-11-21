@@ -28,3 +28,15 @@ class UserService:
     @staticmethod
     def check_new_email(db: Session, email: str, id: int) -> User | None:
         return db.query(User).filter(User.email == email, User.id != id).first()
+
+    @staticmethod
+    def delete(db: Session, user_id: int) -> bool:
+        
+        db_user = db.query(User).filter(User.id == user_id).first()
+
+        if not db_user:
+            return False
+
+        db.delete(db_user)
+        db.commit()
+        return True

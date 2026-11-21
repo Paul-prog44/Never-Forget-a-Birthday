@@ -9,6 +9,7 @@ from app.models.user import User
 
 router = APIRouter()
 
+#Duplicate with auth/register, To be removed
 @router.post("/", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def create_user(user_in: UserCreate, db: Session = Depends(get_db)):
     existing_user = UserService.get_by_email(db, email=user_in.email)
@@ -37,5 +38,15 @@ def update(new_data: UserUpdate, db: Session = Depends(get_db), current_user: Us
 
     return updated_user
 
-# @router.delete("/delete", status_code=status.HTTP_204_NO_CONTENT)
-# def delete()
+@router.delete("/", status_code=status.HTTP_204_NO_CONTENT)
+def delete(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+
+    success = UserService.delete(db = db, user_id=current_user.id)
+
+    if not success: 
+                    raise HTTPException(
+                        status_code=status.HTTP_404_NOT_FOUND, 
+                        detail="Votre compte n'a pas été retrouvé"
+                    )
+    
+    return None

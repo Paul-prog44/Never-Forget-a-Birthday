@@ -1,6 +1,5 @@
 import sys
 from app.db.session import SessionLocal
-# Importe ton modèle Role (adapte le chemin selon ton projet)
 from app.models import Role 
 
 def seed_db():
