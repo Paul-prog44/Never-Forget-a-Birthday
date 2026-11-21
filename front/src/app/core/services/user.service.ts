@@ -14,7 +14,7 @@ import { AuthService } from "./auth.service"
 })
 export class UserService {
     private http = inject(HttpClient)
-    private apiUrl = `${environment.apiUrl}/users`
+    private apiUrl = `${environment.apiUrl}/api/users`
     private authService = inject(AuthService)
   
   currentUser = this.authService.currentUser

@@ -15,7 +15,7 @@ import { Router } from "@angular/router"
 })
 export class AuthService {
   private http = inject(HttpClient)
-  private apiUrl = `${environment.apiUrl}/auth`
+  private apiUrl = `${environment.apiUrl}/api/auth`
   private router = inject(Router)
 
 

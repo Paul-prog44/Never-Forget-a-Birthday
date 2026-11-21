@@ -9,7 +9,7 @@ import { FriendCreate, FriendResponse } from '../models/friend.model';
 })
 export class FriendService {
   private http = inject(HttpClient);
-  private apiUrl = `${environment.apiUrl}/friends` 
+  private apiUrl = `${environment.apiUrl}/api/friends` 
 
   //Memoire locale de la liste d'ami
   friends = signal<FriendResponse[]>([]);
