@@ -6,6 +6,7 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
+RUN sed -i "s|http://127.0.0.1:8000|${API_URL}|g" src/environments/environment.ts
 RUN npm run build -- --configuration production
 
 RUN ls -la /app/dist/front
